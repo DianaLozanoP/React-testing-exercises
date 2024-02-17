@@ -75,3 +75,43 @@ it("works when you click on the left arrow", function () {
     container.querySelector('img[alt="testing image 1"]')
   ).toBeInTheDocument();
 });
+
+it("does not display left arrow when showing first image", function () {
+  const { container } = render(
+    <Carousel
+      photos={TEST_IMAGES}
+      title="images for testing"
+    />
+  );
+  // expect the first image to show
+  expect(
+    container.querySelector('img[alt="testing image 1"]')
+  ).toBeInTheDocument();
+  //Left arrow should not be there
+  expect(
+    container.querySelector(".bi-arrow-left-circle")
+  ).not.toBeInTheDocument();
+
+});
+
+it("does not display right arrow when showing last image", function () {
+  const { container } = render(
+    <Carousel
+      photos={TEST_IMAGES}
+      title="images for testing"
+    />
+  );
+  // move forward in the carousel, two times
+  const rightArrow = container.querySelector(".bi-arrow-right-circle");
+  fireEvent.click(rightArrow);
+  fireEvent.click(rightArrow);
+  // expect the third image to show
+  expect(
+    container.querySelector('img[alt="testing image 3"]')
+  ).toBeInTheDocument();
+  //Right arrow should not be there
+  expect(
+    container.querySelector(".bi-arrow-right-circle")
+  ).not.toBeInTheDocument();
+
+});
